@@ -25,7 +25,7 @@ if internet() == True:
         # CORES
         cor = {'zero':'\033[00;00;00m', 'red':'\033[00;31m', 'reverseRed':'\033[07;31m', 'sub':'\033[04m', 'boldRed':'\033[01;31m'}
 
-
+        
 
         # TÍTULO
         print("{}ctrl+c{} para sair\n".format(cor['sub'], cor['zero']))
@@ -33,35 +33,37 @@ if internet() == True:
         print("{}\n".format(cor['zero']))
 
 
+        # LOOP PARA PESQUISAR FILMES
+        while True:
 
-        # COLETA DE DADOS
-        filme = input("{}Filme{} ▶ ".format(cor['reverseRed'], cor['red']))
-        print(cor['zero'])
-
-
-
-        # FAZ A REQUISIÇÃO DA API
-        requisicao = requests.get('http://www.omdbapi.com/?apikey=38904b3&t={}'.format(filme))
-
-        # CONVERTE OS DADOS PARA JSON
-        dados = json.loads(requisicao.text)
+            # COLETA DE DADOS
+            filme = input("{}Filme{} ▶ ".format(cor['reverseRed'], cor['red']))
+            print(cor['zero'])
 
 
 
-        # TENTA MOSTRAR AS INFORMAÇÕES ADQUIRIDAS OU MOSTRA UM ERRO
-        try:
-            print("""{}
-    Título ➤ {}\n
-    Lançameto ➤ {}\n
-    Classificação imdb ➤ {}\n
-    Gênero ➤ {}\n
-    País ➤ {}\n
-    Prémios ➤ {}\n
-    Sinopse ➤ {}\n
-    {}""".format(cor['boldRed'], dados['Title'], dados['Released'], dados['imdbRating'], dados['Genre'], dados['Country'], dados['Awards'], dados['Plot'], cor['zero']))
-        except KeyError:
-            print("FILME NÃO ENCONTRADO! o nome pode ter sido digitado incorretamente ou ele é inexistente.")
-            print("\n")
+            # FAZ A REQUISIÇÃO DA API
+            requisicao = requests.get('http://www.omdbapi.com/?apikey=38904b3&t={}'.format(filme))
+
+            # CONVERTE OS DADOS PARA JSON
+            dados = json.loads(requisicao.text)
+
+
+
+            # TENTA MOSTRAR AS INFORMAÇÕES ADQUIRIDAS OU MOSTRA UM ERRO
+            try:
+                print("""{}
+        Título ➤ {}\n
+        Lançameto ➤ {}\n
+        Classificação imdb ➤ {}\n
+        Gênero ➤ {}\n
+        País ➤ {}\n
+        Prémios ➤ {}\n
+        Sinopse ➤ {}\n
+        {}""".format(cor['boldRed'], dados['Title'], dados['Released'], dados['imdbRating'], dados['Genre'], dados['Country'], dados['Awards'], dados['Plot'], cor['zero']))
+            except KeyError:
+                print("FILME NÃO ENCONTRADO! o nome pode ter sido digitado incorretamente ou ele é inexistente.")
+                print("\n")
 
     except KeyboardInterrupt: # MENSAGEM A SER EXIBIDA QUANDO OUVER A SAIDA MANUAL DO TECLADO (CTRL+C)
 
