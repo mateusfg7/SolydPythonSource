@@ -1,6 +1,7 @@
 import oauth2 # biblioteca de autenticação
 import json # biblioteca para tratamendo de dados json
 import pprint # biblioteca para exibir dados json de forma mais visual
+import urllib.parse # codificar um caractere espicial em caracteres aceitos por urls
 
 # abre o arquivo contendo as keys
 with open('keys.json', 'r') as openFile:
@@ -22,9 +23,10 @@ token = oauth2.Token(
 client = oauth2.Client(consumer, token)
 
 query = input('search: ')
+query_codificada = urllib.parse.quote(query, safe='') # transformar em código legível para urls
 
 # fazer a requisição de uma feature da api (no caso é para fazer pesquisas no twitter)
-request = client.request(f'https://api.twitter.com/1.1/search/tweets.json?q={query}')
+request = client.request(f'https://api.twitter.com/1.1/search/tweets.json?q={query_codificada}')
 decode_request = request[1].decode() # decodificar a requisição de 'bytes' para 'str'
 json_request = json.loads(decode_request) # converte a requisição de 'str' para 'dict'(json)
 
